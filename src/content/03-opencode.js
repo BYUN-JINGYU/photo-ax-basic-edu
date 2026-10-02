@@ -28,7 +28,7 @@ AX.content.push({
       demoProps: {
         home: AX.site.run.home,
         workdir: AX.site.run.workdir,
-        entries: ['DealGrove.md', 'AGENTS.md', '요청문.md', 'lib\\', 'lib\\three.min.js', 'data\\', `data\\${AX.site.datalake.table}.csv`, 'work\\'],
+        entries: ['Scanner.md', 'AGENTS.md', '요청문.md', 'lib\\', 'lib\\three.min.js', 'data\\', `data\\${AX.site.datalake.table}.csv`, 'work\\'],
         hint: '**Tab** 은 폴더 이름 자동 완성, **↑** 는 방금 친 명령. 일부러 엉뚱한 폴더에서 `opencode` 를 쳐 보세요.'
       },
       notes: '브라우저 안 흉내라 무엇을 쳐도 PC에는 아무 일도 없습니다. 3분 주고, 다 한 사람은 실제 PowerShell 에서 같은 순서로 해 보게 하세요. 홈 폴더에서 opencode 를 치면 어떻게 되는지 일부러 보여 주면 기억에 남습니다.'
@@ -49,7 +49,7 @@ AX.content.push({
         key: 'env',
         items: [
           '`opencode --version` 을 치면 버전 숫자가 나온다',
-          '실습 폴더 `ax-day` 에 `DealGrove.md`, `AGENTS.md`, `lib/three.min.js` 가 보인다',
+          '실습 폴더 `ax-day` 에 `Scanner.md`, `AGENTS.md`, `lib/three.min.js` 가 보인다',
           '실습 폴더에서 `opencode` 를 치면 화면이 뜬다'
         ],
         done: '다음 쪽으로 가셔도 됩니다.'
@@ -67,7 +67,7 @@ AX.content.push({
       ],
       site: 'run',
       code: { text: AX.site.run.code, cap: AX.site.run.cap },
-      notes: '"폴더가 프로젝트"라는 말이 중요합니다. 엉뚱한 폴더에서 열면 DealGrove.md 를 못 찾습니다.'
+      notes: '"폴더가 프로젝트"라는 말이 중요합니다. 엉뚱한 폴더에서 열면 Scanner.md 를 못 찾습니다.'
     },
     {
       title: 'OpenCode 첫 화면, 이것만 알면 됩니다',
@@ -101,7 +101,7 @@ AX.content.push({
       demoProps: {
         models: AX.site.models.list.map(m => `${m.name} (${m.sub})`),
         replies: {
-          build: ['→ Read DealGrove.md', '요청대로 작업했습니다. (실습에서는 사내 LLM이 답합니다)'],
+          build: ['→ Read Scanner.md', '요청대로 작업했습니다. (실습에서는 사내 LLM이 답합니다)'],
           plan: ['계획만 세웁니다: 1) 파일 읽기 2) 수정 3) 확인', '파일은 건드리지 않았습니다. Tab 으로 build 로 넘기세요.']
         },
         commands: [
@@ -111,7 +111,7 @@ AX.content.push({
           { c: '/undo', d: '마지막 요청 취소 + 파일 되돌리기', when: '에이전트가 파일을 망쳤을 때', out: ['마지막 요청을 취소하고 파일 변경 2건을 되돌렸습니다.'] },
           { c: '/redo', d: '되돌린 것을 다시', when: '/undo 를 잘못 눌렀을 때', out: ['되돌렸던 변경 2건을 다시 적용했습니다.'] },
           { c: '/compact', d: '긴 대화를 요약해 컨텍스트 비우기', when: '대화가 길어져 답이 흐려질 때 (2장 컨텍스트)', out: ['대화를 요약했습니다. 41,200 → 2,300 토큰'] },
-          { c: '/sessions', d: '이전 세션 목록으로 돌아가기', when: '어제 하던 대화를 이어갈 때', out: ['1. 딜-그로브 시뮬레이터 (오늘 10:42)', '2. DealGrove.md 요약 (오늘 10:05)'] },
+          { c: '/sessions', d: '이전 세션 목록으로 돌아가기', when: '어제 하던 대화를 이어갈 때', out: ['1. 스캐너 시뮬레이터 (오늘 10:42)', '2. Scanner.md 요약 (오늘 10:05)'] },
           { c: '/export', d: '대화를 Markdown 으로 저장', when: '작업 과정을 공유하거나 기록할 때', out: ['→ Write session-2026-10-02.md', '대화를 파일로 저장했습니다.'] },
           { c: '/help', d: '도움말', when: '명령이 기억나지 않을 때. ctrl+p 도 같은 목록', out: ['/ 로 명령 목록, Tab 으로 plan/build, ctrl+p 로 전체 명령'] },
           { c: '/exit', d: '종료', when: '작업을 마칠 때. 다시 열려면 터미널에서 opencode', out: ['종료합니다.'] }
@@ -162,7 +162,7 @@ AX.content.push({
         '`/init` 이 초안을 만들어 줍니다. 오늘은 실습 키트의 것을 씁니다'
       ],
       code: {
-        text: '# AGENTS.md\n\n- 항상 한국어로 답한다.\n- 새 과제는 먼저 단계별 계획을 보여주고, 확인을 받은 뒤 작업한다.\n- 결과 파일은 work/ 폴더 안에만 만든다.\n- DealGrove.md 같은 원본 파일은 수정하지 않는다.\n- 외부 인터넷은 없다. 라이브러리는 lib/ 폴더의 파일만 쓴다.\n- 모르는 파일 이름은 추측하지 말고 물어본다.\n- 원격 저장소는 ' + AX.site.github.host + ' 만. github.com 에 push 하지 않는다.',
+        text: '# AGENTS.md\n\n- 항상 한국어로 답한다.\n- 새 과제는 먼저 단계별 계획을 보여주고, 확인을 받은 뒤 작업한다.\n- 결과 파일은 work/ 폴더 안에만 만든다.\n- Scanner.md 같은 원본 파일은 수정하지 않는다.\n- 외부 인터넷은 없다. 라이브러리는 lib/ 폴더의 파일만 쓴다.\n- 모르는 파일 이름은 추측하지 말고 물어본다.\n- 원격 저장소는 ' + AX.site.github.host + ' 만. github.com 에 push 하지 않는다.',
         cap: '규칙은 짧고 명령형으로. 길어지면 모델이 일부를 놓칩니다. 6장·8장에서 더 다룹니다.'
       },
       notes: 'AGENTS.md 는 컨텍스트에 매번 들어가므로(2장 데모) 길면 비용입니다. 10줄 안쪽 권장.'
@@ -170,12 +170,12 @@ AX.content.push({
     {
       title: '첫 실습 10분: 사내 LLM에게 첫 요청',
       points: [
-        '입력: `DealGrove.md 를 읽고 핵심을 세 줄로 요약해줘. 수식은 그대로 보여줘`',
-        '**→ Read DealGrove.md** 가 먼저 뜨고 답이 옵니다. 이것이 2장의 툴 호출입니다',
-        '답에 `x² + A·x = B·(t + τ)` 가 있으면 성공. 이 식을 4장에서 씁니다'
+        '입력: `Scanner.md 를 읽고 핵심을 세 줄로 요약해줘. 식은 그대로 보여줘`',
+        '**→ Read Scanner.md** 가 먼저 뜨고 답이 옵니다. 이것이 2장의 툴 호출입니다',
+        '답에 `R = k1·λ / NA` 가 있으면 성공. 이 식을 4장에서 씁니다'
       ],
       demo: 'figure',
-      demoProps: { src: 'asset:oc-05-answer-crop.png', caption: '실제 화면: 파일을 읽고(→ Read) 요약한 뒤 "Build · MAX (GLM 5.2)" 로 끝납니다', height: 350 },
+      demoProps: { src: 'asset:oc-05-answer-crop.png', caption: '화면 예시: 파일을 읽고(→ Read) 요약한 뒤 "Build · MAX (GLM 5.2)" 로 끝납니다', height: 350 },
       notes: '여기서 처음으로 에이전트가 파일을 읽습니다. "파일은 OpenCode가 읽어서 모델에게 넣어 준다"를 다시 한 번(2장 요청 해부). 여유가 있으면 "AGENTS.md 규칙을 지키면서 같은 내용을 한 줄로 줄여줘"를 한 번 더.'
     }
   ]

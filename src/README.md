@@ -1,6 +1,6 @@
 # AX 교육 교안 — 소스
 
-대상: 포토 공정 엔지니어. 4장은 딜-그로브 실습, 5~6장은 설비 알람 데이터(예시 테이블 `eqp_alarm`)로, 8장은 Git·사내 GitHub·Pages 로 진행합니다.
+대상: 포토 공정 엔지니어. 4장은 스캐너 노광(레일리 식) 3D 패터닝 시뮬레이터 실습, 5~6장은 설비 알람 데이터(예시 테이블 `eqp_alarm`)로, 8장은 Git·사내 GitHub·Pages 로 진행합니다.
 
 **사내 정보(설치·설정·OMO·GitHub·Datalake)는 `src/site/site.js` 한 파일에 모았습니다.** 고치는 방법은 `src/site/README.md`.
 
@@ -13,7 +13,7 @@
 - `src/assets/*.png`        슬라이드에 들어가는 그림. 빌드 때 base64 로 HTML 안에 묻힙니다
 - `src/core/`               엔진: util(DOM) · theme(밝기) · art(단면도 SVG) · render(슬라이드) · home(홈) · deck(라우팅·16:9 캔버스·키보드)
 - `src/styles/`             base(팔레트) · home · layout(골격) · slides · demos · ui · explain · sim · learn(2장 기초) · work(터미널·Git) · data(5장 SQL·API)
-- `kit/`                    수강생 PC 에 넣는 실습 키트 (DealGrove.md, AGENTS.md, 요청문.md, lib/three.min.js, checkpoints/)
+- `kit/`                    수강생 PC 에 넣는 실습 키트 (Scanner.md, AGENTS.md, 요청문.md, lib/three.min.js, checkpoints/)
 
 ## 슬라이드 쓰는 법
 슬라이드 한 장 = `{ title, points[], caution?, code?{text,cap}, demo?, demoProps?, notes?, site? }`
@@ -37,7 +37,7 @@
 - 파랑의 단계(`--blue-1 … --blue-5`)는 범주를 구분해야 하는 데모(컨텍스트·토큰)에만 씁니다.
 - 주의·통과·실패에만 의미색(`--amber`, `--ok`, `--bad`)을 씁니다.
 - 표지·홈 그림은 웨이퍼 샷맵입니다. 장이 지날수록 지그재그 순서로 샷이 노광되고, 지금 장의 샷이 진하게 표시됩니다.
-- 4장 표지만 `art: 'oxide'` 로 산화막 단면도를 씁니다.
+- 4장 표지만 `art: 'pic:scanhero'` 로 스캐너 그림을 씁니다. `art: 'pic:그림이름'` + `artCap` 이면 어느 표지든 그림을 바꿀 수 있습니다.
 - 화면 위아래 조작 바는 마우스를 움직일 때만 2.5초 보입니다. 키: ← → 이동, Esc 홈, N 강사 노트, P 인쇄 보기, D 밝기.
 - 움직임: 쪽이 바뀌면 불릿·그림이 차례로 떠오르고, 그림의 입체 상자는 마우스를 올리면 살짝 뜹니다. PC 설정에서 "동작 줄이기"를 켜면 모두 멈춥니다.
 
@@ -71,6 +71,7 @@
 | `hooks` | 6장 Hook | 실행 직전·수정 뒤를 한 칸씩, Hook 켜기/끄기 비교 |
 | `filetree` | 6장 어디에 두면 읽히나 | 파일을 누르면 언제 읽히는지 |
 | `relay` | 7장 역할 나누기 | 계획자→구현자→검토자, 검토자가 실수를 잡음 |
+| `litho` | 4장 노광 원리 | 광원·NA·k1·하프피치를 바꾸면 R·DOF·판정과 줄무늬 단면이 바뀜 |
 | `fit` | 2장 딥러닝 | 기온–커피 판매량 점에 직선을 맞추며 오차가 줄어드는 과정 |
 | `attention` | 2장 트랜스포머 | 단어를 누르면 어느 단어를 얼마나 보는지 |
 | `bertgpt` | 2장 BERT 와 GPT | 인코더는 빈칸 맞히기, 디코더는 한 조각씩 이어 쓰기 |

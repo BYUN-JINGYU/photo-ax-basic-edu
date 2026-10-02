@@ -21,10 +21,11 @@
       notes(s));
   }
 
-  // 표지 그림: 기본은 웨이퍼 샷맵, art: 'oxide' 면 산화막 단면도(4장)
+  // 표지 그림: 기본은 웨이퍼 샷맵, art: 'pic:이름' 이면 그 그림(AX.pics)과 artCap
   function coverArt(s, n, total) {
     const cap = (left) => h('div', { class: 'chap-cap' }, h('span', {}, left), h('b', {}, `${n}장 / ${total}장`));
-    if (s.art === 'oxide') return [AX.art.xsection({ ratio: 0.7, label: '1000 °C · 1 h · 건식 = 70 nm', w: 470, h: 300 }), cap('이 장에서 키울 산화막')];
+    const pic = /^pic:(.+)$/.exec(s.art || '');
+    if (pic && AX.pics[pic[1]]) return [h('div', { class: 'cover-pic' }, AX.pics[pic[1]]()), cap(s.artCap || '')];
     return [AX.art.wafer({ n, total, w: 420, h: 380 }), cap('샷이 찍히듯, 장마다 채워집니다')];
   }
 

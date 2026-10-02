@@ -16,7 +16,6 @@ body[data-view="chapter"] .home-stage { display: none; }
 .home-credit { margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--acc-ink); }
 .home-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: 14px; color: var(--mute); }
 .home-art { display: grid; gap: 12px; }
-.home-art .xsection { display: block; }
 
 .toc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
 .toc-card {

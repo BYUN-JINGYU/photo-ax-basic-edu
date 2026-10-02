@@ -82,17 +82,15 @@ pre.code .st { color: var(--amber-ink); }
 .outcomes ul { list-style: none; display: grid; gap: 7px; font-size: 18px; color: var(--t2); }
 .outcomes li { padding-left: 24px; position: relative; }
 .outcomes li::before { content: ""; position: absolute; left: 0; top: .6em; width: 12px; height: 3px; border-radius: 2px; background: var(--acc); }
+.cover-pic { width: 470px; }
+.cover-pic .pic { width: 100%; height: auto; }
 .cover-art { justify-self: end; display: grid; gap: 18px; justify-items: stretch; }
-.cover-art .xsection { display: block; }
 
 /* 표지 그림 아래 한 줄 */
 .chap-cap { display: flex; justify-content: space-between; font-size: 13px; color: var(--mute); margin-top: 8px; }
 .chap-cap b { color: var(--acc-ink); font-weight: 700; }
 
 /* 단면도 공용 */
-.xsection .xs-cap { font-size: 13px; fill: var(--mute); font-weight: 600; }
-.xsection .xs-ox-cap { font-size: 13px; fill: var(--acc-ink); font-weight: 800; }
-.xsection .xs-ox { transition: y 1.1s var(--ease), height 1.1s var(--ease); }
 
 /* 사진·화면 캡처: 둥근 모서리와 부드러운 그림자 */
 .figure { display: flex; flex-direction: column; align-items: center; gap: 12px; }

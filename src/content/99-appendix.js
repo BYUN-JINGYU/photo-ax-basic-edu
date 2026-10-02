@@ -10,7 +10,7 @@ AX.content.push({
         key: 'prep',
         items: [
           'OpenCode 설치 명령(PowerShell 한 줄)이 수강생 PC 에서 되는지 리허설. Oh-my-codemate, MCP 실습 패키지, `opencode.json`',
-          '실습 키트를 전원 PC의 `ax-day` 폴더에: `DealGrove.md`, `AGENTS.md`, `요청문.md`, `lib/three.min.js`',
+          '실습 키트를 전원 PC의 `ax-day` 폴더에: `Scanner.md`, `AGENTS.md`, `요청문.md`, `lib/three.min.js`',
           '수강 인원수만큼 동시 요청 부하 테스트 (느리면 조별 시차 운영)',
           '모든 실습을 실제 사내 모델로 리허설. 4장 시뮬레이터가 폐쇄망에서 빈 화면 없이 뜨는지 확인',
           '장별 체크포인트 폴더: `checkpoints/04` 는 키트에 있음, `05`, `06` 은 리허설 때 만들기',
@@ -65,7 +65,7 @@ AX.content.push({
           ['opencode 를 못 찾음', 'PowerShell 창을 닫고 다시 열기 → `opencode --version`'],
           ['실습 파일을 못 찾음', '터미널 위치부터: `pwd` → `cd` 실습 폴더 → 다시 `opencode`'],
           ['시뮬레이터 빈 화면', 'F12 콘솔 확인. CDN 주소면 "lib/three.min.js 를 써" 로 재요청'],
-          ['검산값(70 nm) 불일치', '"DealGrove.md 3절 순서대로 다시 계산해줘". 흔한 원인: K 변환, τ 누락'],
+          ['검산값(R 40.0 nm) 불일치', '"Scanner.md 3절 순서대로 다시 계산해줘". 흔한 원인: λ 단위, NA 제곱 누락'],
           ['툴 호출 실패 반복', '같은 요청 한 번 더 → 더 작게 → MAX ↔ Pro 교체'],
           ['AGENTS.md 무시', '파일 위치(프로젝트 루트) 확인, 규칙은 짧고 명령형으로'],
           ['조회 결과가 너무 큼', '요청문에 상한·기간 추가, MCP 툴의 `limit` 낮추기'],
@@ -81,7 +81,7 @@ AX.content.push({
         '홈에서 장을 고르고, ← → 로 이동. **Esc** 홈, **D** 밝게·어둡게',
         '**N** 강사 노트 켜기·끄기 (수강생 배포본에서는 꺼 두기)',
         '**P** 인쇄 보기: 전체를 세로로 펼침 → 브라우저 인쇄로 유인물',
-        '주소창의 `#장id/쪽` 으로 특정 쪽을 바로 엽니다 (예: `#dealgrove/5`)',
+        '주소창의 `#장id/쪽` 으로 특정 쪽을 바로 엽니다 (예: `#scanner/5`)',
         '사내 정보는 소스의 `src/site/site.js` 한 파일. 고친 뒤 `python build.py`'
       ],
       notes: '수강생용 배포본을 따로 만들 필요는 없습니다. 노트는 N 키를 누르기 전엔 보이지 않습니다.'

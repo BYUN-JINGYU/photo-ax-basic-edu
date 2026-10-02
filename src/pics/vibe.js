@@ -46,7 +46,7 @@
     `<rect x="4" y="18" width="742" height="226" rx="22" class="zone"/>`,
     `<rect x="4" y="18" width="742" height="226" rx="22" class="wall"/>`,
     pill(24, 6, '사내망', { c: 'acc', size: 13 }),
-    monitor(40, 62, 180, 104, { t: '내 PC · OpenCode', lines: [['> opencode', 'g'], ['DealGrove.md 읽기…', 'w']] }),
+    monitor(40, 62, 180, 104, { t: '내 PC · OpenCode', lines: [['> opencode', 'g'], ['Scanner.md 읽기…', 'w']] }),
     arrow([[238, 112], [318, 112]], {}), arrow([[318, 126], [238, 126]], { c: 'm' }),
     server(330, 60, 132, 116, { t: '사내 LLM 서버' }),
     T(400, 228, 'MAX · Pro · Fast · Image', { size: 12, c: 'm' }),

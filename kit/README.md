@@ -5,7 +5,7 @@
 ```
 ax-day/
 ├── AGENTS.md        에이전트 규칙 (3장에서 /init 대신 써도 됨)
-├── DealGrove.md     딜-그로브 모델 핸드아웃 (4장 실습의 입력)
+├── Scanner.md       스캐너 노광 원리 핸드아웃 (4장 실습의 입력)
 ├── 요청문.md         장별 요청문 모음
 ├── lib/
 │   └── three.min.js 폐쇄망용 Three.js (r160, 키트에 포함)
@@ -19,7 +19,7 @@ ax-day/
 
 강사 준비:
 - `lib/three.min.js`(r160) 와 `checkpoints/04/simulator.html` 은 키트에 들어 있다. 반입 절차가 있으면 이 두 파일만 신청하면 된다.
-- `checkpoints/04/simulator.html` 은 브라우저로 열어 1000 °C · 1 h · 건식에서 70 nm 가 나오는지 리허설 때 한 번 확인한다.
+- `checkpoints/04/simulator.html` 은 브라우저로 열어 ArF 액침 · NA 1.35 · k1 0.28 에서 R = 40.0 nm 가 나오는지 리허설 때 한 번 확인한다.
 - 5장 테이블 이름(예시: eqp_alarm)과 컬럼은 실제 Datalake 에 맞춰 `요청문.md` 와 교안 `src/site/site.js` 의 `datalake` 항목을 고친다.
 - Datalake 접근이 막힌 PC 를 대비해 가상 데이터 `data/eqp_alarm.csv` 를 넣어 둔다 (키트에 포함).
 - `checkpoints/05`, `06` 은 리허설 때 실제 사내 모델로 만든 결과물을 넣는다.

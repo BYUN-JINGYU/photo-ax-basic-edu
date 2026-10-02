@@ -39,10 +39,10 @@
       hint: '네 칸을 채우면 오른쪽에 요청문이 완성됩니다. 복사해서 OpenCode 입력창에 붙여넣으세요.',
       outLabel: 'OpenCode에 붙여넣을 요청문',
       fields: [
-        { key: 'goal', label: '목표', sub: '무엇을 만들까', def: '브라우저에서 도는 딜-그로브 산화막 3D 시뮬레이터' },
-        { key: 'input', label: '입력', sub: '어떤 파일·데이터', def: 'DealGrove.md (수식·상수·검산값), lib/three.min.js' },
-        { key: 'output', label: '출력', sub: '어떤 형태로', def: 'work/simulator.html 한 파일. 왼쪽에 온도·시간 슬라이더, 가운데 회색 큐브 위에 반투명 파란 산화막' },
-        { key: 'limit', label: '제약', sub: '하지 말 것', def: '인터넷 없음(lib 폴더의 파일만 사용), DealGrove.md 수정 금지, 검산값과 비교해 확인' }
+        { key: 'goal', label: '목표', sub: '무엇을 만들까', def: '브라우저에서 도는 스캐너 노광 3D 패터닝 시뮬레이터' },
+        { key: 'input', label: '입력', sub: '어떤 파일·데이터', def: 'Scanner.md (레일리 식·광원 표·검산값), lib/three.min.js' },
+        { key: 'output', label: '출력', sub: '어떤 형태로', def: 'work/simulator.html 한 파일. 왼쪽에 광원 버튼과 NA·k1·하프피치 슬라이더, 가운데 회색 웨이퍼 위 파란 레지스트 줄무늬' },
+        { key: 'limit', label: '제약', sub: '하지 말 것', def: '인터넷 없음(lib 폴더의 파일만 사용), Scanner.md 수정 금지, 검산값과 비교해 확인' }
       ],
       template: v => [
         `목표: ${or(v.goal, '(무엇을 만들지)')}`,

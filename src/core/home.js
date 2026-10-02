@@ -7,7 +7,7 @@
     const chapters = sessions.filter(s => s.kind === 'session');
     const aux = sessions.filter(s => s.kind !== 'session');
 
-    // 타일 윗선 = 산화막 두께. 장이 뒤로 갈수록 길어진다
+    // 타일 윗선 = 진행 막대. 장이 뒤로 갈수록 길어진다
     const grid = h('nav', { class: 'toc', 'aria-label': '목차' }, chapters.map(s => {
       const r = chapterNo(sessions, s) / chapters.length;
       return h('button', { class: 'toc-card', onclick: () => onOpen(s.id) },

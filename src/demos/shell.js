@@ -86,7 +86,7 @@
         case 'cls': case 'clear': log.replaceChildren(); break;
         case 'opencode':
           if (/^(--version|-v)$/.test(arg)) { out(props.version || '1.18.34'); break; }
-          if (key(cwd) === key(props.workdir)) { out('OpenCode 를 열었습니다. 이 폴더가 프로젝트입니다.', 'ok'); out('DealGrove.md · AGENTS.md 를 읽을 수 있습니다.', 'ok'); done.add('open'); }
+          if (key(cwd) === key(props.workdir)) { out('OpenCode 를 열었습니다. 이 폴더가 프로젝트입니다.', 'ok'); out('Scanner.md · AGENTS.md 를 읽을 수 있습니다.', 'ok'); done.add('open'); }
           else out(`OpenCode 가 ${cwd} 를 프로젝트로 열었습니다. 여기엔 실습 파일이 없습니다. 먼저 cd 로 들어가세요.`, 'err');
           break;
         case 'help': out('pwd 지금 위치 · dir 목록 · cd 폴더 들어가기 · cd .. 위로 · cls 지우기 · opencode 실행 · opencode --version 설치 확인', 'dim'); break;

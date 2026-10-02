@@ -164,29 +164,28 @@ table.tbl td:first-child { font-weight: 700; white-space: nowrap; color: var(--t
 .rq-resp-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--mute); }
 .rq-resp { margin: 8px 0 0; padding: 10px 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; font-size: 11.5px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 100px; }
 
-/* ---- 딜-그로브 미니 시뮬레이터 ---- */
-.dg-grid { display: grid; grid-template-columns: 1fr 320px 1fr; gap: 16px; align-items: center; }
-.dg-controls { display: grid; gap: 8px; }
-.dg-controls label { display: grid; gap: 2px; font-size: 13px; color: var(--mute); }
-.dg-controls label b { color: var(--chrome); font-weight: 700; }
-.dg-formula { margin-top: 4px; font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--ox-ink); letter-spacing: .02em; }
-.dg-consts { font-family: var(--mono); font-size: 11.5px; color: var(--mute); }
-.dg-thick { font-size: 15px; margin-top: 2px; }
-.dg-thick b { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: var(--acc-ink); margin-right: 4px; }
-.dg-thick span { color: var(--mute); font-size: 13px; }
-.dg-regime { font-size: 12.5px; color: var(--mute); line-height: 1.45; }
-.dg-scene { position: relative; height: 256px; border-radius: 16px; overflow: hidden;
-  background: radial-gradient(420px 240px at 50% 10%, color-mix(in srgb, #FF8A3D calc(var(--heat, 0) * 38%), var(--paper)) 0%, var(--mist) 100%); box-shadow: inset 0 0 0 1px var(--line); perspective: 900px; }
-.dg-world { position: absolute; left: 50%; top: 60%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(62deg) rotateZ(-32deg); }
-.dg-box { position: absolute; left: -90px; top: -90px; transform-style: preserve-3d; }
-.dg-face { position: absolute; left: 0; top: 0; transform-origin: top left; backface-visibility: visible; transition: transform .25s var(--ease), height .25s var(--ease), width .25s var(--ease); }
-.dg-box.sub .dg-face.top { background: #A9B0BC; }
-.dg-box.sub .dg-face.front { background: #6F7785; }
-.dg-box.sub .dg-face.back { background: #5F6673; }
-.dg-box.sub .dg-face.left { background: #596170; }
-.dg-box.sub .dg-face.right { background: #7F8796; }
-.dg-box.ox .dg-face { background: color-mix(in srgb, var(--acc) 42%, transparent); border: 1px solid color-mix(in srgb, var(--acc) 75%, transparent); }
-.dg-box.ox .dg-face.top { background: color-mix(in srgb, var(--acc-ink) 62%, transparent); }
+/* ---- 스캐너 미니 시뮬레이터 ---- */
+.lt-grid { display: grid; grid-template-columns: 1fr 320px 1fr; gap: 18px; align-items: center; }
+.lt-controls { display: grid; gap: 8px; }
+.lt-controls label { display: grid; gap: 2px; font-size: 13px; color: var(--mute); }
+.lt-controls label b { color: var(--chrome); font-weight: 700; }
+.lt-srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.lt-src { padding: 4px 2px; border-radius: 9px; border: 1px solid var(--line); background: var(--paper); font-size: 12px; font-weight: 700; line-height: 1.2; }
+.lt-src small { display: block; font-size: 10.5px; font-weight: 400; color: var(--mute); }
+.lt-src.on { background: var(--acc); border-color: var(--acc); color: var(--on-acc); }
+.lt-src.on small { color: var(--on-acc); opacity: .8; }
+.lt-svg { width: 320px; height: 250px; border-radius: 16px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.lt-cone { fill: color-mix(in srgb, var(--acc) 16%, transparent); stroke: color-mix(in srgb, var(--acc) 45%, transparent); transition: all .25s var(--ease); }
+.lt-lens { fill: color-mix(in srgb, var(--acc-soft) 70%, transparent); stroke: var(--acc-line); stroke-width: 1.5; transition: cy .25s var(--ease); }
+.lt-wafer { fill: var(--line-strong); }
+.lt-line { fill: var(--acc); transition: y .25s var(--ease), height .25s var(--ease); }
+.lt-space { fill: color-mix(in srgb, var(--acc) 45%, var(--paper)); transition: y .25s var(--ease), height .25s var(--ease); }
+.lt-read { display: grid; gap: 8px; align-content: center; }
+.lt-formula { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--acc-ink); }
+.lt-r { font-size: 14px; color: var(--mute); }
+.lt-r b { font-family: var(--display); font-size: 38px; font-weight: 800; letter-spacing: -.02em; color: var(--acc-ink); margin-right: 4px; }
+.lt-r span { display: block; font-size: 12.5px; }
+.lt-dof { font-size: 13.5px; color: var(--t2); }
 
 /* ---- 하네스 링 ---- */
 .hn-grid { display: grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: center; }
@@ -206,12 +205,10 @@ table.tbl td:first-child { font-weight: 700; white-space: nowrap; color: var(--t
 .hn-k span { margin-left: 8px; font-size: 13px; color: var(--mute); font-weight: 600; }
 .hn-what { margin-top: 8px; font-size: 14.5px; line-height: 1.5; }
 .hn-meta { margin-top: 10px; display: grid; gap: 4px; font-size: 12.5px; color: var(--mute); }
-.dg-read { display: grid; gap: 8px; align-content: center; }
-.dg-read .dg-thick b { font-size: 38px; }
 
 /* 좁은 화면: 여러 단짜리 데모를 한 단으로 */
 @media (max-width: 700px) {
-  .rq-grid, .dg-grid, .hn-grid, .tc-wrap, .tbl-wrap.split, .quiz.two, .quiz.three, .builder .fields { grid-template-columns: 1fr; }
+  .rq-grid, .lt-grid, .hn-grid, .tc-wrap, .tbl-wrap.split, .quiz.two, .quiz.three, .builder .fields { grid-template-columns: 1fr; }
   .hn-ring, .hn-spokes { margin: 0 auto; }
   .figure.two { flex-direction: column; }
 }

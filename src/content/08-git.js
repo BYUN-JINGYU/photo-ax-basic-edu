@@ -101,7 +101,7 @@ AX.content.push({
       demo: 'promptcard',
       demoProps: {
         title: '커밋·push 요청문',
-        text: `이 폴더를 git 저장소로 만들어줘. data 폴더는 .gitignore 에 넣어 올리지 마.\n맨 위에 index.html 을 만들고 work/simulator.html 로 가는 링크를 넣어줘.\n지금 상태를 "딜-그로브 시뮬레이터 첫 버전"으로 커밋해줘.\n원격 저장소는 https://${GH.host}/<내 아이디>/ax-day 야. github.com 은 쓰지 마.\nmain 브랜치로 push 하고 git log --oneline 을 보여줘.`,
+        text: `이 폴더를 git 저장소로 만들어줘. data 폴더는 .gitignore 에 넣어 올리지 마.\n맨 위에 index.html 을 만들고 work/simulator.html 로 가는 링크를 넣어줘.\n지금 상태를 "스캐너 시뮬레이터 첫 버전"으로 커밋해줘.\n원격 저장소는 https://${GH.host}/<내 아이디>/ax-day 야. github.com 은 쓰지 마.\nmain 브랜치로 push 하고 git log --oneline 을 보여줘.`,
         hint: 'push 할 때 로그인 창이 뜨면 사내 안내대로 로그인합니다. 비밀번호나 토큰을 요청문에 붙이지 않습니다.'
       },
       notes: '빨리 끝난 사람은 시뮬레이터를 하나 고친 뒤 "커밋하고 push 해줘" → 1~2분 뒤 같은 링크에서 바뀐 화면을 확인하게 하세요. push 가 안 되면 저장소 주소와 권한부터 봅니다.'

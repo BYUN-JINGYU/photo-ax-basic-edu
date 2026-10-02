@@ -14,16 +14,16 @@
     ['set', '  "model": "MAX",'],
     ['', '  "messages": ['],
     ['system', '    { "role": "system",    "content": "AGENTS.md: 한국어로 답한다 …" },'],
-    ['chat', '    { "role": "user",      "content": "DealGrove.md 를 읽고 3D 시뮬레이터를 만들어줘" },'],
-    ['chat', '    { "role": "assistant", "tool_calls": [{ "read": "DealGrove.md" }] },'],
-    ['chat', '    { "role": "tool",      "content": "# 딜-그로브 산화 모델 … x² + A·x = B·(t+τ) …" }'],
+    ['chat', '    { "role": "user",      "content": "Scanner.md 를 읽고 3D 시뮬레이터를 만들어줘" },'],
+    ['chat', '    { "role": "assistant", "tool_calls": [{ "read": "Scanner.md" }] },'],
+    ['chat', '    { "role": "tool",      "content": "# 스캐너 노광의 기본 원리 … R = k1·λ/NA …" }'],
     ['', '  ],'],
     ['tools', '  "tools": [ "read", "write", "bash", "query_datalake" ],'],
     ['set', '  "temperature": 0.7,  "max_tokens": 4096'],
     ['', '}']
   ];
   const RESP = {
-    text: '{ "role": "assistant",\n  "content": "계획: 1) DealGrove.md 수식 구현 2) Three.js 큐브 3) 슬라이더 연결 … 진행할까요?" }',
+    text: '{ "role": "assistant",\n  "content": "계획: 1) Scanner.md 식 구현 2) Three.js 웨이퍼·줄무늬 3) 슬라이더 연결 … 진행할까요?" }',
     tool: '{ "role": "assistant",\n  "tool_calls": [{ "name": "write", "args": { "path": "work/simulator.html", "content": "<!doctype html>…" } }] }'
   };
 

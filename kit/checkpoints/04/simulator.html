@@ -2,24 +2,29 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>딜-그로브 산화막 3D 시뮬레이터</title>
+<title>스캐너 패터닝 3D 시뮬레이터</title>
 <style>
   html, body { height: 100%; margin: 0; background: #0b0b0d; color: #f2f2f4; font-family: "Malgun Gothic", "맑은 고딕", "Segoe UI", system-ui, sans-serif; }
-  #app { display: grid; grid-template-columns: 300px 1fr; height: 100%; }
-  aside { padding: 26px 24px; border-right: 1px solid #222; background: #121214; display: flex; flex-direction: column; gap: 18px; }
+  #app { display: grid; grid-template-columns: 320px 1fr; height: 100%; }
+  aside { padding: 24px 22px; border-right: 1px solid #222; background: #121214; display: flex; flex-direction: column; gap: 16px; overflow: auto; }
   h1 { font-size: 18px; margin: 0 0 4px; }
   .sub { font-size: 12.5px; color: #9a9aa0; line-height: 1.5; }
   label { display: block; font-size: 13px; color: #c7c7cc; }
   label b { color: #fff; font-size: 14px; }
   input[type=range] { width: 100%; accent-color: #2997ff; margin-top: 6px; }
-  .row { display: flex; gap: 8px; }
-  button { font: inherit; padding: 6px 14px; border-radius: 999px; border: 1px solid #333; background: #1e1e21; color: #fff; cursor: pointer; }
+  .src { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  button { font: inherit; font-size: 12.5px; padding: 6px 6px; border-radius: 10px; border: 1px solid #333; background: #1e1e21; color: #fff; cursor: pointer; }
+  button small { display: block; color: #9a9aa0; font-size: 11px; }
   button.on { background: #2997ff; border-color: #2997ff; }
-  .readout { margin-top: 6px; }
+  button.on small { color: #dbeaff; }
+  .formula { font-family: Consolas, monospace; font-size: 15px; color: #6cb8ff; }
   .readout b { font-size: 40px; font-weight: 800; letter-spacing: -.02em; color: #6cb8ff; }
   .readout span { color: #9a9aa0; font-size: 13px; }
-  .consts { font-family: Consolas, "D2Coding", monospace; font-size: 12px; color: #9a9aa0; line-height: 1.6; }
-  .formula { font-family: Consolas, monospace; font-size: 15px; color: #6cb8ff; }
+  .dof { font-size: 13px; color: #c7c7cc; }
+  .verdict { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+  .verdict.ok { background: #12325c; color: #8cc4ff; }
+  .verdict.blur { background: #3a2e10; color: #f3c766; }
+  .verdict.no { background: #3a1614; color: #ff8f88; }
   .note { font-size: 12px; color: #6e6e73; margin-top: auto; line-height: 1.5; }
   #view { position: relative; }
   canvas { display: block; }
@@ -29,36 +34,46 @@
 <div id="app">
   <aside>
     <div>
-      <h1>딜-그로브 산화막 시뮬레이터</h1>
-      <div class="sub">실리콘 기판(회색) 위에 산화막(파랑)이 자랍니다. 슬라이더를 움직여 보세요.</div>
+      <h1>스캐너 패터닝 시뮬레이터</h1>
+      <div class="sub">빛(파장)과 렌즈(NA)로 줄무늬를 얼마나 작게 찍을 수 있는지 봅니다.</div>
     </div>
-    <label>온도(Temperature) <b id="tv">1000 °C</b><input id="temp" type="range" min="800" max="1200" step="10" value="1000"></label>
-    <label>시간(Time) <b id="hv">1.0 h</b><input id="time" type="range" min="0" max="10" step="0.1" value="1"></label>
-    <div class="row"><button id="dry" class="on">건식 O₂</button><button id="wet">습식 H₂O</button></div>
-    <div class="formula">x² + A·x = B·(t + τ)</div>
-    <div class="consts" id="consts"></div>
-    <div class="readout"><b id="nm">70</b> nm <span id="um">(0.070 μm)</span></div>
-    <div class="note">3D 층 높이는 보기 좋게 과장했습니다 (1 μm = 1.2 단위, 기판 높이 0.6 단위). 숫자는 DealGrove.md 수식 그대로입니다.</div>
+    <div class="src" id="src"></div>
+    <label>NA (개구수) <b id="nav">1.35</b><input id="na" type="range" min="0.3" max="1.35" step="0.01" value="1.35"></label>
+    <label>k1 (공정 계수) <b id="k1v">0.28</b><input id="k1" type="range" min="0.25" max="0.8" step="0.01" value="0.28"></label>
+    <label>목표 하프피치 hp <b id="hpv">40 nm</b><input id="hp" type="range" min="5" max="400" step="1" value="40"></label>
+    <div class="formula">R = k1 · λ / NA</div>
+    <div class="readout"><b id="r">40.0</b> nm <span>찍을 수 있는 최소 하프피치</span></div>
+    <div class="dof">초점 심도 DOF = 0.5 · λ / NA² = <b id="dof">52.9</b> nm</div>
+    <div><span class="verdict ok" id="verdict">인쇄 OK</span></div>
+    <div class="note">3D 줄무늬는 Scanner.md 6절의 교육용 단순화입니다. 줄무늬 7쌍을 화면 폭에 맞춰 그리고, 크기는 숫자로 봅니다.</div>
   </aside>
   <div id="view"></div>
 </div>
 
 <script src="../../lib/three.min.js"></script>
 <script>
-// ---- 딜-그로브 모델 (DealGrove.md 3절 순서 그대로) ----
-const K = 8.617e-5;
-function dealGrove(tempC, hours, wet) {
-  const kT = K * (tempC + 273.15);
-  const B  = wet ? 386   * Math.exp(-0.78 / kT) : 772    * Math.exp(-1.23 / kT);
-  const BA = wet ? 1.63e8 * Math.exp(-2.05 / kT) : 6.23e6 * Math.exp(-2.00 / kT);
-  const A  = B / BA;
-  const xi = wet ? 0 : 0.025;
-  const tau = (xi * xi + A * xi) / B;
-  const x = (A / 2) * (Math.sqrt(1 + 4 * B * (hours + tau) / (A * A)) - 1);
-  return { B, A, tau, x };
+// ---- 노광 모델 (Scanner.md 3절 순서 그대로) ----
+function litho(lambda, na, k1, hp) {
+  const R = k1 * lambda / na;
+  const DOF = 0.5 * lambda / (na * na);
+  const Rr = Math.round(R * 10) / 10;                       // 판정은 소수점 한 자리 R 로
+  const verdict = hp >= Rr ? 'ok' : hp >= Rr / 2 ? 'blur' : 'no';
+  const C = Math.min(1, Math.max(0, 2 * hp / Rr - 1));     // 6절 콘트라스트
+  return { R, DOF, verdict, C };
 }
-// 검산: 1000 °C, 1 h, 건식 → 약 70 nm
-console.assert(Math.round(dealGrove(1000, 1, false).x * 1000) === 70, '검산값 불일치');
+// 검산: ArF 액침 193 nm, NA 1.35, k1 0.28 → R 40.0 nm, DOF 52.9 nm
+console.assert(litho(193, 1.35, 0.28, 40).R.toFixed(1) === '40.0', '검산값 불일치 (R)');
+console.assert(litho(193, 1.35, 0.28, 40).DOF.toFixed(1) === '52.9', '검산값 불일치 (DOF)');
+
+const SOURCES = [
+  { name: 'g-line', lambda: 436, na: 0.45, color: 0x4f7dff },
+  { name: 'i-line', lambda: 365, na: 0.60, color: 0x8a5cff },
+  { name: 'KrF', lambda: 248, na: 0.80, color: 0x9b6bd8 },
+  { name: 'ArF', lambda: 193, na: 0.93, color: 0x9d7cc8 },
+  { name: 'ArF 액침', lambda: 193, na: 1.35, color: 0x9d7cc8 },
+  { name: 'EUV', lambda: 13.5, na: 0.33, color: 0xb8a9d0 }
+];
+let src = SOURCES[4];
 
 // ---- Three.js 장면 ----
 const view = document.getElementById('view');
@@ -68,37 +83,37 @@ view.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0b0b0d);
 const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-camera.position.set(3.2, 2.6, 4.2);
-camera.lookAt(0, 0.3, 0);
-
 scene.add(new THREE.HemisphereLight(0xffffff, 0x222233, 0.9));
 const key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(4, 6, 3); scene.add(key);
-const furnace = new THREE.PointLight(0xff7a1a, 0, 12); furnace.position.set(0, 3, 0); scene.add(furnace);
 
-// 실리콘 기판: 두꺼운 회색 큐브
-const SUB_H = 0.6;
-const substrate = new THREE.Mesh(new THREE.BoxGeometry(2.4, SUB_H, 2.4),
+// 웨이퍼: 넓고 얇은 회색 판
+const W = 3.2, WAFER_H = 0.25, RESIST = 0.35, PAIRS = 7;
+const wafer = new THREE.Mesh(new THREE.BoxGeometry(W, WAFER_H, 2.2),
   new THREE.MeshStandardMaterial({ color: 0x6b7380, metalness: 0.35, roughness: 0.55 }));
-substrate.position.y = SUB_H / 2;
-scene.add(substrate);
+wafer.position.y = WAFER_H / 2; scene.add(wafer);
 
-// 산화막: 반투명 파란 층. 높이를 두께에 비례시킨다 (과장 배율)
-const UNITS_PER_UM = 1.2;
-const oxide = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1, 2.4),
-  new THREE.MeshPhysicalMaterial({ color: 0x3a9bff, transparent: true, opacity: 0.55, roughness: 0.15, metalness: 0.0, transmission: 0.2 }));
-scene.add(oxide);
-const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2.4, 1, 2.4)),
-  new THREE.LineBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: 0.6 }));
-scene.add(edges);
-
-// 바닥 격자
-const grid = new THREE.GridHelper(8, 16, 0x2a2a2e, 0x1a1a1e); grid.position.y = -0.001; scene.add(grid);
-
-let targetH = 0.001, currentH = 0.001;
-function setOxideHeight(h) {
-  oxide.scale.y = h; oxide.position.y = SUB_H + h / 2;
-  edges.scale.y = h; edges.position.y = SUB_H + h / 2;
+// 레지스트: 라인(진한 파랑)과 스페이스(옅은 파랑)를 번갈아 14 개
+const pitchW = W / PAIRS, bars = [];
+const lineMat = new THREE.MeshStandardMaterial({ color: 0x2f7cf6, roughness: 0.35 });
+const spaceMat = new THREE.MeshStandardMaterial({ color: 0x5a95f0, roughness: 0.5, transparent: true, opacity: 0.85 });
+for (let i = 0; i < PAIRS * 2; i++) {
+  const isLine = i % 2 === 0;
+  const m = new THREE.Mesh(new THREE.BoxGeometry(pitchW / 2 * 0.98, 1, 2.2), isLine ? lineMat : spaceMat);
+  m.position.x = -W / 2 + pitchW / 4 + i * pitchW / 2;
+  m.userData = { isLine, h: RESIST / 2 };
+  scene.add(m); bars.push(m);
 }
+
+// 렌즈와 빛 원뿔: 렌즈 크기는 그대로, NA 가 클수록 빛이 넓은 각도로 모여 렌즈가 웨이퍼에 가까워진다
+const LENS_R = 1.1, TOP = WAFER_H + RESIST;
+const lens = new THREE.Mesh(new THREE.CylinderGeometry(LENS_R, LENS_R, 0.18, 48),
+  new THREE.MeshPhysicalMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.35, roughness: 0.05 }));
+scene.add(lens);
+const coneMat = new THREE.MeshBasicMaterial({ color: src.color, transparent: true, opacity: 0.28, side: THREE.DoubleSide, depthWrite: false });
+const cone = new THREE.Mesh(new THREE.ConeGeometry(LENS_R, 1, 48, 1, true), coneMat);
+cone.rotation.x = Math.PI;                      // 꼭짓점이 아래(웨이퍼)를 보게
+scene.add(cone);
+const grid = new THREE.GridHelper(10, 20, 0x2a2a2e, 0x1a1a1e); grid.position.y = -0.001; scene.add(grid);
 
 function resize() {
   const w = view.clientWidth, hgt = view.clientHeight;
@@ -108,32 +123,44 @@ window.addEventListener('resize', resize); resize();
 
 // ---- UI ----
 const $ = id => document.getElementById(id);
-let wet = false;
+SOURCES.forEach(s => {
+  const b = document.createElement('button');
+  b.innerHTML = `${s.name}<small>${s.lambda} nm</small>`;
+  b.onclick = () => { src = s; $('na').value = s.na; update(); };
+  s.btn = b; $('src').appendChild(b);
+});
+let coneH = 1;
 function update() {
-  const T = +$('temp').value, t = +$('time').value;
-  $('tv').textContent = T + ' °C'; $('hv').textContent = t.toFixed(1) + ' h';
-  const r = dealGrove(T, t, wet);
-  $('nm').textContent = Math.round(r.x * 1000).toLocaleString();
-  $('um').textContent = `(${r.x.toFixed(3)} μm)`;
-  $('consts').textContent = `B = ${r.B.toFixed(4)} μm²/h   A = ${r.A.toFixed(4)} μm   τ = ${r.tau.toFixed(3)} h`;
-  targetH = Math.max(0.002, Math.min(3.5, r.x * UNITS_PER_UM));
-  furnace.intensity = ((T - 800) / 400) * 6;
+  const na = +$('na').value, k1 = +$('k1').value, hp = +$('hp').value;
+  $('nav').textContent = na.toFixed(2); $('k1v').textContent = k1.toFixed(2); $('hpv').textContent = hp + ' nm';
+  SOURCES.forEach(s => s.btn.classList.toggle('on', s === src));
+  const r = litho(src.lambda, na, k1, hp);
+  $('r').textContent = r.R.toFixed(1);
+  $('dof').textContent = r.DOF.toFixed(1);
+  const v = $('verdict');
+  v.className = 'verdict ' + r.verdict;
+  v.textContent = { ok: '인쇄 OK', blur: '흐림 (불안정)', no: '안 찍힘' }[r.verdict];
+  bars.forEach(b => { b.userData.h = RESIST * (b.userData.isLine ? 0.5 + 0.5 * r.C : 0.5 - 0.5 * r.C); });
+  const n = na > 0.93 ? 1.44 : 1;                 // 액침이면 물의 굴절률
+  coneH = Math.min(1.9, 0.45 + LENS_R / Math.tan(Math.asin(Math.min(0.99, na / n))));
+  coneMat.color.setHex(src.color);
 }
-$('temp').addEventListener('input', update);
-$('time').addEventListener('input', update);
-$('dry').addEventListener('click', () => { wet = false; $('dry').classList.add('on'); $('wet').classList.remove('on'); update(); });
-$('wet').addEventListener('click', () => { wet = true; $('wet').classList.add('on'); $('dry').classList.remove('on'); update(); });
+['na', 'k1', 'hp'].forEach(id => $(id).addEventListener('input', update));
 update();
 
-// ---- 애니메이션: 층이 실시간으로 자란다 ----
-let angle = 0;
+// ---- 애니메이션: 줄무늬 높이와 빛 원뿔이 부드럽게 따라간다 ----
+let angle = 0.6;
 function animate() {
   requestAnimationFrame(animate);
-  currentH += (targetH - currentH) * 0.08;      // 부드럽게 따라간다
-  setOxideHeight(currentH);
-  angle += 0.0025;
-  camera.position.set(Math.sin(angle) * 5.2, 2.8, Math.cos(angle) * 5.2);
-  camera.lookAt(0, 0.4, 0);
+  bars.forEach(b => {
+    const cur = b.scale.y + (Math.max(0.004, b.userData.h) - b.scale.y) * 0.1;
+    b.scale.y = cur; b.position.y = WAFER_H + cur / 2;
+  });
+  cone.scale.y += (coneH - cone.scale.y) * 0.1;
+  cone.position.y = TOP + cone.scale.y / 2; lens.position.y = TOP + cone.scale.y + 0.09;
+  angle += 0.002;
+  camera.position.set(Math.sin(angle) * 6.0, 3.2, Math.cos(angle) * 6.0);
+  camera.lookAt(0, 1.0, 0);
   renderer.render(scene, camera);
 }
 animate();
