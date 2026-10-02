@@ -28,6 +28,18 @@ AX.content.push({
     },
     ...AX.parts.data.compare,
     {
+      title: 'MCP 서버 한 장 (강사 데모용)',
+      pic: 'mcpserver',
+      points: [
+        '툴 하나 = 함수 하나. 설명(docstring)이 곧 모델에게 주는 사용법',
+        'SELECT만 허용 + 행 수 상한. **보안 규칙을 코드로** 박아 둡니다',
+        '`opencode.json` 에 한 줄 등록하면 끝'
+      ],
+      site: 'datalake',
+      code: { text: AX.site.datalake.mcpCode, cap: '폐쇄망 설치용 mcp 패키지는 오프라인 번들에 포함. 등록 형식은 배포된 OpenCode 버전 문서에 맞춰 확인.' },
+      notes: '데모 시나리오: 등록 → OpenCode 재시작 → "어제 알람이 많은 설비 다섯 대를 표로" → 표가 나오면 설비 하나를 평소 보던 알람 화면과 대조.'
+    },
+    {
       title: '데이터 요청 3요소',
       points: [
         '**무슨 데이터** 테이블·항목 · **어떤 조건** 기간·라인 · **어떤 형태** CSV·표',
@@ -46,10 +58,10 @@ AX.content.push({
       notes: '"실행 전에 쿼리를 먼저 보여줘"가 요청문 끝에 붙는 이유: 수강생이 WHERE 조건과 기간만 눈으로 확인해도 잘못된 범위를 조회하는 실수를 막을 수 있습니다.'
     },
     {
-      title: '에이전트가 쓰는 코드, 읽기만 하면 됩니다',
+      title: '요청하면 에이전트가 이런 코드를 씁니다',
       pic: 'sqlmap',
       points: [
-        '어떤 칸(SELECT) · 어느 표(FROM) · 어떤 줄(WHERE) · 상한(LIMIT)',
+        'Bigdataquery 로 Impala SQL 을 보내는 코드입니다. 읽기만 하면 됩니다',
         '기간 조건이 내가 말한 것과 같은지, `LIMIT` 상한이 있는지 확인'
       ],
       site: 'datalake',
@@ -77,18 +89,6 @@ AX.content.push({
         hint: '사내 LLM이라도 권한은 그대로입니다. 모델이 쿼리를 잘못 쓰면 수백만 행을 가져올 수 있습니다.'
       },
       notes: '규칙은 보안팀 가이드에 맞춰 조정. 수강생에게 먼저 답을 외치게 하고 버튼을 누르면 분위기가 좋습니다. 이 쪽은 인쇄해서 자리마다 붙여 두어도 좋습니다.'
-    },
-    {
-      title: 'MCP 서버 한 장 (강사 데모용)',
-      pic: 'mcpserver',
-      points: [
-        '툴 하나 = 함수 하나. 설명(docstring)이 곧 모델에게 주는 사용법',
-        'SELECT만 허용 + 행 수 상한. **보안 규칙을 코드로** 박아 둡니다',
-        '`opencode.json` 에 한 줄 등록하면 끝'
-      ],
-      site: 'datalake',
-      code: { text: AX.site.datalake.mcpCode, cap: '폐쇄망 설치용 mcp 패키지는 오프라인 번들에 포함. 등록 형식은 배포된 OpenCode 버전 문서에 맞춰 확인.' },
-      notes: '데모 시나리오: 등록 → OpenCode 재시작 → "어제 알람이 많은 설비 다섯 대를 표로" → 표가 나오면 설비 하나를 평소 보던 알람 화면과 대조.'
     },
     {
       title: '실습 25분: 설비 알람 차트 만들기',

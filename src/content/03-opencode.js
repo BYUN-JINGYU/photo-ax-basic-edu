@@ -21,19 +21,6 @@ AX.content.push({
       notes: '코딩이 처음인 분이 가장 많이 막히는 곳이 "어느 폴더에서 열었나"입니다. 탐색기와 1:1 로 대응시켜 설명하세요. 터미널을 열면 보통 C:\\Users\\내아이디 에 서 있고, 거기서 opencode 를 치면 실습 파일을 못 찾습니다. 탐색기 주소창에 powershell 을 치는 방법이 가장 덜 헷갈립니다.'
     },
     {
-      title: '터미널 연습: 실습 폴더로 들어가 OpenCode 열기',
-      site: 'run',
-      points: ['아래 파란 창을 누르고 명령을 칩니다. 오른쪽 미션을 차례로'],
-      demo: 'shell',
-      demoProps: {
-        home: AX.site.run.home,
-        workdir: AX.site.run.workdir,
-        entries: ['Scanner.md', 'AGENTS.md', '요청문.md', 'lib\\', 'lib\\three.min.js', 'data\\', `data\\${AX.site.datalake.table}.csv`, 'work\\'],
-        hint: '**Tab** 은 폴더 이름 자동 완성, **↑** 는 방금 친 명령. 일부러 엉뚱한 폴더에서 `opencode` 를 쳐 보세요.'
-      },
-      notes: '브라우저 안 흉내라 무엇을 쳐도 PC에는 아무 일도 없습니다. 3분 주고, 다 한 사람은 실제 PowerShell 에서 같은 순서로 해 보게 하세요. 홈 폴더에서 opencode 를 치면 어떻게 되는지 일부러 보여 주면 기억에 남습니다.'
-    },
-    {
       title: '설치: PowerShell 에 명령 한 줄',
       pic: 'install',
       site: 'install',
@@ -68,6 +55,19 @@ AX.content.push({
       site: 'run',
       code: { text: AX.site.run.code, cap: AX.site.run.cap },
       notes: '"폴더가 프로젝트"라는 말이 중요합니다. 엉뚱한 폴더에서 열면 Scanner.md 를 못 찾습니다.'
+    },
+    {
+      title: '터미널 연습: 실습 폴더로 들어가 OpenCode 열기',
+      site: 'run',
+      points: ['아래 파란 창을 누르고 명령을 칩니다. 오른쪽 미션을 차례로'],
+      demo: 'shell',
+      demoProps: {
+        home: AX.site.run.home,
+        workdir: AX.site.run.workdir,
+        entries: ['Scanner.md', 'AGENTS.md', '요청문.md', 'lib\\', 'lib\\three.min.js', 'data\\', `data\\${AX.site.datalake.table}.csv`, 'work\\'],
+        hint: '**Tab** 은 폴더 이름 자동 완성, **↑** 는 방금 친 명령. 일부러 엉뚱한 폴더에서 `opencode` 를 쳐 보세요.'
+      },
+      notes: '브라우저 안 흉내라 무엇을 쳐도 PC에는 아무 일도 없습니다. 3분 주고, 다 한 사람은 실제 PowerShell 에서 같은 순서로 해 보게 하세요. 홈 폴더에서 opencode 를 치면 어떻게 되는지 일부러 보여 주면 기억에 남습니다.'
     },
     {
       title: 'OpenCode 첫 화면, 이것만 알면 됩니다',
