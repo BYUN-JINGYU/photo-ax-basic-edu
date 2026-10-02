@@ -1,0 +1,99 @@
+/* ---- 슬라이드 그림(pic): 글만 있던 쪽을 돕는 간단한 그림. 그리는 법은 src/pics/_kit.js ---- */
+.pic { display: block; width: 100%; height: auto; overflow: visible; }
+.pic .pb { stroke-width: 1.5; }
+.pic .pb.line { fill: var(--paper); stroke: var(--line-strong); }
+.pic .pb.soft { fill: var(--acc-soft); stroke: var(--acc-line); }
+.pic .pb.acc { fill: var(--acc); stroke: none; }
+.pic .pb.dark { fill: var(--term-bg); stroke: none; }
+.pic .pb.mist { fill: var(--mist); stroke: none; }
+.pic .pb.ok { fill: var(--ok-soft); stroke: none; }
+.pic .pb.bad { fill: var(--bad-soft); stroke: none; }
+.pic .pb.warn { fill: var(--amber-soft); stroke: none; }
+.pic .pb.notop { stroke: none; }
+.pic .pl { fill: none; stroke: var(--acc); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pic .pl.m { stroke: var(--line-strong); stroke-width: 1.5; }
+.pic .pl.ok { stroke: var(--ok); }
+.pic .pl.bad { stroke: var(--bad); }
+.pic .pl.t { stroke: var(--t2); }
+.pic .pl.thick { stroke-width: 2.5; }
+.pic .pl.dash { stroke-dasharray: 5 5; }
+.pic .ph { fill: var(--acc); }
+.pic .ph.m { fill: var(--line-strong); }
+.pic .ph.bad { fill: var(--bad); }
+.pic .pt { font-family: var(--font); }
+.pic .pt.mono { font-family: var(--mono); font-variant-ligatures: none; }
+.pic .pt.t { fill: var(--t1); }
+.pic .pt.m { fill: var(--mute); }
+.pic .pt.a { fill: var(--acc-ink); }
+.pic .pt.w { fill: #fff; }
+.pic .pt.ok { fill: var(--ok); }
+.pic .pt.bad { fill: var(--bad); }
+.pic .pt.g { fill: #9BE3B0; }
+
+/* 놓는 자리: 코드 옆(pic-row), 글 아래(text-pic), 글 옆(pic-side) */
+.pic-row { display: grid; grid-template-columns: minmax(0, 1fr) var(--pic-w, 400px); gap: 24px; align-items: start; margin-top: 16px; }
+.pic-row pre.code { margin-top: 0; font-size: 13px; }
+.slide-body.text-pic { justify-content: flex-start; }
+.text-pic .slide-pic { flex: 1 1 auto; min-height: 0; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
+.text-pic .slide-pic .pic { width: 100%; height: 100%; max-height: 430px; }
+.slide-body.pic-side { display: grid; grid-template-columns: minmax(0, 1fr) var(--pic-w, 420px); gap: 32px; align-items: center; }
+@media (max-width: 700px) {
+  .pic-row, .slide-body.pic-side { grid-template-columns: 1fr; }
+}
+
+/* 입체 면 색: 앞(f3) · 윗(t3) · 옆(s3). 토큰을 섞어 밝기만 바꾼다 */
+.pic .shd { fill: rgba(17, 19, 31, .08); }
+.pic .f3, .pic .t3, .pic .s3 { stroke-width: 1.2; stroke-linejoin: round; }
+.pic .f3.line { fill: var(--paper); stroke: var(--line-strong); }
+.pic .t3.line { fill: color-mix(in srgb, var(--mist) var(--keep), #fff); stroke: var(--line-strong); }
+.pic .s3.line { fill: var(--mist); stroke: var(--line-strong); }
+.pic .f3.soft { fill: var(--acc-soft); stroke: var(--acc-line); }
+.pic .t3.soft { fill: color-mix(in srgb, var(--acc-soft) var(--keep), #fff); stroke: var(--acc-line); }
+.pic .s3.soft { fill: color-mix(in srgb, var(--acc-line) 55%, var(--acc-soft)); stroke: var(--acc-line); }
+.pic .f3.acc { fill: var(--acc); stroke: none; }
+.pic .t3.acc { fill: color-mix(in srgb, var(--acc) 68%, #fff); stroke: none; }
+.pic .s3.acc { fill: color-mix(in srgb, var(--acc) 72%, #000); stroke: none; }
+.pic .f3.dark { fill: color-mix(in srgb, var(--term-bg) 90%, #fff); stroke: none; }
+.pic .t3.dark { fill: color-mix(in srgb, var(--term-bg) 74%, #fff); stroke: none; }
+.pic .s3.dark { fill: var(--term-bg); stroke: none; }
+.pic .f3.ok { fill: var(--ok-soft); stroke: color-mix(in srgb, var(--ok) 35%, transparent); }
+.pic .t3.ok { fill: color-mix(in srgb, var(--ok-soft) var(--keep), #fff); stroke: color-mix(in srgb, var(--ok) 35%, transparent); }
+.pic .s3.ok { fill: color-mix(in srgb, var(--ok) 22%, var(--ok-soft)); stroke: color-mix(in srgb, var(--ok) 35%, transparent); }
+.pic .f3.warn { fill: var(--amber-soft); stroke: color-mix(in srgb, var(--amber) 45%, transparent); }
+.pic .t3.warn { fill: color-mix(in srgb, var(--amber-soft) var(--keep), #fff); stroke: color-mix(in srgb, var(--amber) 45%, transparent); }
+.pic .s3.warn { fill: color-mix(in srgb, var(--amber) 28%, var(--amber-soft)); stroke: color-mix(in srgb, var(--amber) 45%, transparent); }
+.pic .f3.bad { fill: var(--bad-soft); stroke: color-mix(in srgb, var(--bad) 35%, transparent); }
+.pic .t3.bad { fill: color-mix(in srgb, var(--bad-soft) var(--keep), #fff); stroke: color-mix(in srgb, var(--bad) 35%, transparent); }
+.pic .s3.bad { fill: color-mix(in srgb, var(--bad) 20%, var(--bad-soft)); stroke: color-mix(in srgb, var(--bad) 35%, transparent); }
+.pic .f3.mist { fill: var(--mist); stroke: none; }
+.pic .t3.mist { fill: color-mix(in srgb, var(--mist) var(--keep), #fff); stroke: none; }
+.pic .s3.mist { fill: color-mix(in srgb, var(--line-strong) 60%, var(--mist)); stroke: none; }
+.pic .hl { stroke: rgba(255, 255, 255, .55); stroke-width: 3; stroke-linecap: round; fill: none; }
+.pic .led { fill: var(--ok); }
+.pic .cloud circle, .pic .cloud rect { fill: var(--mist); }
+.pic .cloud.bad circle, .pic .cloud.bad rect { fill: var(--bad-soft); }
+.pic .dia { stroke-width: 1.5; }
+.pic .pb.warn.dia { stroke: color-mix(in srgb, var(--amber) 55%, transparent); }
+.pic .pb.soft.dia { stroke: var(--acc-line); }
+.pic .wall { fill: none; stroke: var(--acc); stroke-width: 2.5; stroke-dasharray: 10 6; }
+.pic .zone { fill: color-mix(in srgb, var(--acc-soft) 45%, transparent); }
+.pic .frame { fill: var(--paper); stroke: var(--line-strong); stroke-width: 1.5; }
+.pic .frame.ghost { fill: var(--quartz); }
+
+/* 움직임: 쪽이 열리면 상자가 차례로 올라오고, 선이 그려지고, 점선은 흐른다. 마우스를 올리면 상자가 뜬다 */
+.pic .blk { transform-box: fill-box; transition: transform .2s var(--ease), filter .2s var(--ease); }
+.pic .blk:hover { transform: translateY(-4px); filter: drop-shadow(0 6px 10px rgba(10, 102, 232, .18)); }
+.pic .blk .blk:hover { transform: none; filter: none; }
+.slide.current .pic .blk { animation: pic-pop .55s var(--ease) both; animation-delay: calc(var(--i, 0) * 70ms); }
+.slide.current .pic .blk .blk { animation: none; }
+.slide.current .pic .pl.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: pic-draw .6s var(--ease) .35s forwards; }
+.pic .pl.dash { animation: pic-flow 1.2s linear infinite; }
+@keyframes pic-pop { from { opacity: 0; transform: translateY(16px); } }
+@keyframes pic-draw { to { stroke-dashoffset: 0; } }
+@keyframes pic-flow { to { stroke-dashoffset: -20; } }
+@media (prefers-reduced-motion: reduce) {
+  .slide.current .pic .blk, .pic .pl.dash { animation: none; }
+  .slide.current .pic .pl.draw { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+}
+.print-view .pic .blk, .print-view .pic .pl.draw { animation: none !important; stroke-dasharray: none; stroke-dashoffset: 0; }
+:root[data-theme="dark"] .pic .hl { stroke: rgba(255, 255, 255, .14); }

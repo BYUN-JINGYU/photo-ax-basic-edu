@@ -1,0 +1,113 @@
+/* ---- 장 보기: 전체 화면 슬라이드. 조작부는 마우스를 움직일 때만 나타난다 ---- */
+body[data-view="home"] .stage { display: none; }
+.stage { position: relative; height: 100vh; height: 100dvh; overflow: hidden; background: var(--si); }
+
+/* 프레임: 화면 전체. 캔버스: 1280×720, 중앙에 비율 유지 */
+.frame { position: absolute; inset: 0; }
+.canvas {
+  position: absolute; left: 50%; top: 50%;
+  width: 1280px; height: 720px;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  background: var(--si);
+  overflow: hidden;
+}
+.slide { display: none; position: absolute; inset: 0; padding: 56px 92px 56px; overflow: auto; }
+.slide.current { display: flex; flex-direction: column; animation: slide-in .32s var(--ease); }
+@keyframes slide-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+/* 불릿·데모가 차례로 떠오른다 */
+.slide.current .points li { animation: rise .45s var(--ease) both; }
+.slide.current .points li:nth-child(2) { animation-delay: .08s; }
+.slide.current .points li:nth-child(3) { animation-delay: .16s; }
+.slide.current .points li:nth-child(4) { animation-delay: .24s; }
+.slide.current .points li:nth-child(n+5) { animation-delay: .32s; }
+.slide.current .demo, .slide.current pre.code, .slide.current .slide-pic { animation: rise .5s var(--ease) .12s both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .slide.current, .slide.current .points li, .slide.current .demo, .slide.current pre.code, .slide.current .slide-pic { animation: none; }
+}
+.print-view .slide .points li, .print-view .slide .demo, .print-view .slide pre.code, .print-view .slide .slide-pic { animation: none; }
+.slide .notes { display: none; }
+.print-chapter { display: none; }
+
+/* 조작부: 평소엔 숨김, 마우스가 움직이면 2.5초 동안 보임 */
+.stage-top, .stage-bottom { position: absolute; left: 0; right: 0; z-index: 5; opacity: 0; transition: opacity .25s var(--ease); pointer-events: none; }
+.stage.chrome-on .stage-top, .stage.chrome-on .stage-bottom, .stage:focus-within .stage-bottom { opacity: 1; pointer-events: auto; }
+.stage-top { top: 0; display: flex; align-items: center; gap: 14px; padding: 16px 28px; font-size: 14px; color: var(--mute);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--si) 96%, transparent), transparent); }
+.home-link { font-weight: 600; color: var(--chrome); padding: 6px 12px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+.home-link:hover { background: var(--mist); }
+.stage-top .chap { font-weight: 600; color: var(--chrome); white-space: pre; }
+.stage-top .count { margin-left: auto; font-variant-numeric: tabular-nums; }
+.stage-bottom { bottom: 0; display: flex; align-items: center; gap: 10px; padding: 18px 28px 22px;
+  background: linear-gradient(0deg, color-mix(in srgb, var(--si) 97%, transparent), transparent); }
+.stage-bottom .spacer { flex: 1; }
+.notes-toggle.on { background: var(--amber-soft); color: var(--amber-ink); border-color: transparent; }
+
+/* 항상 보이는 최소 표시: 오른쪽 아래 쪽 번호 + 쪽마다 한 칸씩 채워지는 눈금 */
+.pager { position: absolute; right: 26px; bottom: 16px; z-index: 4; display: flex; align-items: center; gap: 12px; font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.pager .pg-segs { display: flex; gap: 3px; }
+.pager .pg-segs i { width: 9px; height: 3px; border-radius: 2px; background: var(--line); }
+.pager .pg-segs i.on { background: var(--acc); }
+.pager .pg-count { font-family: var(--display); font-size: 12px; letter-spacing: 0; color: var(--acc-ink); }
+.pager .pg-count span { color: var(--faint); }
+.stage.chrome-on .pager { opacity: 0; }
+
+/* 강사 노트 띠: 캔버스 아래가 아니라 화면 아래 덮개로 */
+.notes-strip {
+  display: none;
+  position: absolute; left: 50%; bottom: 72px; z-index: 6; transform: translateX(-50%);
+  width: min(1100px, calc(100% - 48px));
+  padding: 12px 18px;
+  max-height: 110px; overflow: auto;
+  border-left: 3px solid var(--amber);
+  background: var(--amber-soft);
+  color: var(--amber-ink);
+  border-radius: 0 12px 12px 0;
+  font-size: 15px; line-height: 1.55;
+  box-shadow: 0 10px 40px rgba(17,19,31,.14);
+}
+.notes-strip.empty::before { content: "이 쪽에는 강사 노트가 없습니다."; opacity: .6; }
+.notes-on .notes-strip { display: block; }
+
+/* 좁은 화면: 축소 대신 자연스러운 흐름 배치 */
+@media (max-width: 700px) {
+  .stage { height: auto; min-height: 100dvh; overflow: visible; }
+  .frame { position: static; }
+  .canvas { position: static; width: auto; height: auto; transform: none !important; }
+  .slide { position: static; padding: 24px 18px 80px; overflow: visible; }
+  .stage-top, .stage-bottom { opacity: 1; pointer-events: auto; position: sticky; }
+  .stage-top { top: 0; } .stage-bottom { bottom: 0; }
+  .notes-strip { position: static; transform: none; width: auto; margin: 0 16px 10px; }
+  .pager { display: none; }
+}
+
+/* 인쇄 보기: 전 장을 세로로, 장 사이에 머리글 */
+.print-view .home-stage, .print-view .stage-top, .print-view .notes-strip, .print-view .pager { display: none; }
+.print-view .stage { display: block; height: auto; overflow: visible; background: #fff; color: #1B1D2A; }
+.print-view .stage-bottom { position: sticky; bottom: 0; opacity: 1; pointer-events: auto; background: #fff; border-top: 1px solid #D5D8E2; }
+.print-view .frame { position: static; }
+.print-view .canvas { position: static; width: auto; height: auto; transform: none !important; background: transparent; overflow: visible; }
+.print-view .print-chapter { display: flex; align-items: baseline; gap: 14px; padding: 40px 48px 8px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; break-before: page; page-break-before: always; }
+.print-view .print-chapter:first-child { break-before: auto; page-break-before: auto; }
+.print-view .print-chapter .t { color: var(--acc-ink); }
+.print-view .slide { display: flex; position: static; flex-direction: column; padding: 32px 48px; overflow: visible; border-bottom: 1px solid #D5D8E2; break-inside: avoid; page-break-inside: avoid; animation: none; }
+.print-view .slide-demo { display: none; }
+.print-view.notes-on .slide .notes {
+  display: block; margin-top: 18px; padding: 12px 16px;
+  border-left: 3px solid #E6A700; background: #FFF3D6; color: #8A5A00;
+  border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.55;
+}
+.print-view .slide .notes b { font-weight: 700; margin-right: .5em; }
+@media print {
+  body { background: #fff; }
+  .home-stage, .stage-top, .notes-strip, .stage-bottom, .pager { display: none !important; }
+  .stage { display: block !important; height: auto; overflow: visible; background: #fff; }
+  .frame { position: static; }
+  .canvas { position: static; width: auto; height: auto; transform: none !important; background: transparent; overflow: visible; }
+  .print-chapter { display: flex !important; align-items: baseline; gap: 14px; padding: 24px 0 8px; font-size: 22px; font-weight: 800; break-before: page; page-break-before: always; }
+  .print-chapter:first-child { break-before: auto; page-break-before: auto; }
+  .print-chapter .t { color: var(--acc-ink); }
+  .slide { display: flex !important; position: static; flex-direction: column; padding: 20px 0; overflow: visible; border-bottom: 1px solid #D5D8E2; break-inside: avoid; page-break-inside: avoid; }
+  .slide-demo { display: none !important; }
+}

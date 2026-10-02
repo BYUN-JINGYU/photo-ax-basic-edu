@@ -1,0 +1,78 @@
+/* ---- 터미널과 Git 데모: 터미널 따라 하기, 세이브 포인트, Pages 설정 ---- */
+
+/* 터미널 따라 하기 */
+.sh-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr) minmax(0, .72fr); gap: 12px; }
+.sh-term { display: flex; flex-direction: column; height: 296px; padding: 12px 14px; border-radius: 14px; background: #012456; color: #EEF3FA; font-family: var(--mono); font-size: 13.5px; cursor: text; }
+.sh-log { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px); mask-image: linear-gradient(to bottom, transparent 0, #000 28px); }
+.sh-out { white-space: pre-wrap; word-break: break-all; line-height: 1.45; }
+.sh-out.cmd { color: #fff; }
+.sh-out.dim { color: #9DB4D6; }
+.sh-out.err { color: #FFB4A8; }
+.sh-out.ok { color: #9BE3B0; }
+.sh-row { display: flex; gap: 8px; align-items: baseline; margin-top: 4px; }
+.sh-ps { flex: none; color: #fff; }
+.demo input.sh-input { flex: 1; min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: #FFF27A; font-family: var(--mono); font-size: 13.5px; outline: none; caret-color: #fff; }
+.demo input.sh-input:focus { outline: none; box-shadow: none; }
+.sh-side { display: contents; }
+.sh-missions { margin: 0; padding-left: 22px; display: grid; gap: 2px; font-size: 14px; color: var(--t2); }
+.sh-missions li.done { color: var(--ok); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--ok) 50%, transparent); }
+.sh-missions li.done::marker { content: "✓  "; }
+.sh-result { margin-top: 4px; font-size: 13.5px; font-weight: 700; color: var(--ok); min-height: 1em; }
+.sh-tree-wrap { min-height: 0; height: 296px; overflow: hidden; }
+.sh-tree { font-family: var(--mono); font-size: 12.5px; line-height: 1.42; color: var(--mute); }
+.sh-node { display: flex; gap: 8px; align-items: center; }
+.sh-node.path { color: var(--t1); font-weight: 700; }
+.sh-node.here { color: var(--acc-ink); font-weight: 700; }
+.sh-node.here span { padding: 0 6px; border-radius: 6px; background: var(--acc); color: var(--on-acc); font-family: var(--font); font-size: 11.5px; }
+.sh-node.file { color: var(--faint); }
+
+/* 세이브 포인트 */
+.sp-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; }
+.sp-screen { display: grid; grid-template-rows: auto 1fr; border-radius: 14px; border: 1px solid var(--line); background: var(--paper); overflow: hidden; }
+.sp-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--quartz); font-size: 13px; color: var(--mute); }
+.sp-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
+.sp-view { position: relative; height: 196px; display: grid; place-items: center; }
+.sp-view svg { width: 100%; height: 100%; display: block; }
+.sp-broken { position: absolute; inset: 0; display: none; place-items: center; align-content: center; gap: 4px; background: var(--bad-soft); color: var(--bad); font-weight: 700; text-align: center; }
+.sp-view.broken .sp-broken { display: grid; }
+.sp-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.sp-say { margin-top: 10px; min-height: 46px; }
+.sp-line { position: relative; display: grid; gap: 8px; padding-left: 20px; }
+.sp-line::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line-strong); }
+.sp-pt { position: relative; display: grid; gap: 1px; font-size: 14px; color: var(--t2); }
+.sp-pt::before { content: ""; position: absolute; left: -18px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 3px var(--paper); }
+.sp-pt.head::before { box-shadow: 0 0 0 3px var(--acc-soft); }
+.sp-pt b { font-family: var(--mono); font-size: 12px; color: var(--mute); font-weight: 400; }
+.sp-pt.head span { font-weight: 700; color: var(--t1); }
+.sp-pt.dirty::before { background: var(--paper); border: 2px dashed var(--amber); width: 8px; height: 8px; }
+.sp-pt.dirty span { color: var(--amber-ink); }
+.sp-empty { font-size: 13.5px; color: var(--faint); }
+
+/* Pages 설정 (gp = GitHub Pages) */
+.gp-mock { display: grid; grid-template-columns: 180px minmax(0, 1fr); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--paper); }
+.gp-nav { display: grid; align-content: start; gap: 2px; padding: 10px 8px; border-right: 1px solid var(--line); background: var(--quartz); font-size: 13.5px; color: var(--mute); }
+.gp-nav span { padding: 5px 10px; border-radius: 8px; }
+.gp-nav span.on { background: var(--paper); color: var(--t1); font-weight: 700; box-shadow: inset 2px 0 0 var(--acc); }
+.gp-body { display: grid; gap: 8px; padding: 12px 18px; align-content: start; }
+.gp-h { font-size: 16.5px; font-weight: 800; color: var(--t1); }
+.gp-field { display: grid; gap: 4px; font-size: 13.5px; color: var(--mute); }
+.gp-field > b { font-size: 14.5px; color: var(--t1); }
+.gp-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gp-step { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--mist); color: var(--mute); font-size: 12px; font-weight: 800; margin-right: 6px; }
+.gp-field.done .gp-step { background: var(--acc); color: var(--on-acc); }
+.gp-field.wait { opacity: .45; pointer-events: none; }
+.gp-url { padding: 6px 12px; border-radius: 10px; background: var(--ok-soft); color: var(--t1); font-size: 14px; }
+.gp-url code { font-family: var(--mono); font-size: 13px; color: var(--acc-ink); word-break: break-all; }
+.gp-url.off { background: var(--mist); color: var(--mute); }
+
+@media (max-width: 700px) {
+  .sh-grid, .sp-grid { grid-template-columns: 1fr; }
+  .gp-mock { grid-template-columns: 1fr; }
+  .gp-nav { display: none; }
+}
+.sp-view .sp-txt { font-size: 12px; fill: var(--mute); font-family: var(--font); }
+.sp-view .sp-txt.on { fill: #fff; font-weight: 700; }
+.sp-say .sub { display: block; }
+.gp-note { padding: 6px 12px; border-radius: 10px; background: var(--acc-soft); color: var(--acc-deep); font-size: 14px; }
+.sp-view .sp-txt.dark { fill: var(--t1); font-size: 13px; font-weight: 600; }
+.sp-view .sp-big { font-size: 26px; font-weight: 800; fill: var(--acc-ink); font-family: var(--font); }

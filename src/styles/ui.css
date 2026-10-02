@@ -1,0 +1,18 @@
+/* ---- 공용 조작부: 단계 넘기기, 선택 버튼 묶음 ---- */
+.ui-stepper { display: flex; align-items: center; gap: 8px; }
+.ui-dots { display: flex; gap: 5px; margin-left: 6px; }
+.ui-dot { width: 22px; height: 6px; border-radius: 3px; background: var(--line-strong); }
+.ui-dot.on { background: var(--acc-line); }
+.ui-dot.now { background: var(--acc); }
+.ui-count { font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; margin-left: 4px; }
+
+.ui-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: var(--mist); }
+.ui-seg-btn { padding: 5px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--mute); white-space: nowrap; }
+.ui-seg-btn:hover { color: var(--t1); }
+.ui-seg-btn.on { background: var(--paper); color: var(--acc-ink); box-shadow: 0 1px 3px rgba(17,19,31,.14); }
+.ui-seg.small .ui-seg-btn { padding: 3px 10px; font-size: 13px; }
+
+/* 데모 안의 흰 카드 공통 */
+.sheet { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-width: 0; }
+.sheet-label { font-size: 12.5px; font-weight: 700; color: var(--mute); margin-bottom: 6px; }
+.say-box { padding: 10px 14px; border-radius: 12px; background: var(--acc-soft); color: var(--acc-deep); font-size: 15px; line-height: 1.5; }

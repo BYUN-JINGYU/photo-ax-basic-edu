@@ -1,0 +1,130 @@
+/* ---- 밝은 키노트 톤: 흰 바탕, 짙은 글자, 파랑 하나. 산화막도 같은 파랑 ---- */
+:root {
+  color-scheme: light;
+  /* 표면 */
+  --si: #FFFFFF;                              /* 화면 바탕 */
+  --quartz: #F5F5F7;                          /* 데모 패널 */
+  --paper: #FFFFFF;                           /* 패널 안의 카드·입력칸 */
+  --mist: #EBEBF0;                            /* 태그·호버 */
+  --line: #E2E2E8;                            /* 가는 선 */
+  --line-strong: #CFCFD6;
+  --lift: 0 1px 2px rgba(17,19,31,.05), 0 4px 14px rgba(17,19,31,.05);   /* 카드가 바탕에서 살짝 뜨는 정도 */
+  /* 글자 */
+  --chrome: #1D1D1F;
+  --t1: #111114;                              /* 제목·굵은 글자 */
+  --t2: #2C2C31;                              /* 본문 불릿 */
+  --mute: #6E6E76;                            /* 보조 글자 */
+  --faint: #A1A1A8;                           /* 아주 옅은 글자 */
+  /* 파랑 하나 */
+  --acc: #0A66E8;
+  --acc-ink: #0752C2;                         /* 흰 바탕 위 파란 글자 */
+  --acc-soft: #EAF2FF;                        /* 선택 배경 */
+  --acc-line: #9EC3FA;                        /* 선택 테두리 */
+  --acc-deep: #063A8C;                        /* 산화막 아래쪽 */
+  --on-acc: #FFFFFF;
+  /* 파랑의 단계: 범주 구분이 필요한 데모(컨텍스트·토큰)용 */
+  --blue-1: #0A66E8; --blue-2: #4C8FF0; --blue-3: #8DB8F6; --blue-4: #C3DAFA; --blue-5: #E3EEFD;
+  /* 의미색: 주의·통과·실패에만 */
+  --amber: #E8A100;
+  --amber-ink: #7A5200;
+  --amber-soft: #FFF6DE;
+  --ok: #138A4A;
+  --ok-soft: #E5F5EC;
+  --bad: #D2312A;
+  --bad-soft: #FDECEB;
+  /* 코드·터미널 */
+  --code-bg: #F5F5F7;
+  --term-bg: #121217;                         /* OpenCode 화면 흉내는 어두운 터미널 그대로 */
+  --term-fg: #E8E8EE;
+  --font: "Wanted Sans Deck", "Wanted Sans", "Pretendard", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --display: "Unbounded Deck", var(--font);
+  --mono: "JetBrains Mono Deck", "Cascadia Code", "D2Coding", "Consolas", "SF Mono", "Menlo", monospace;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  /* 예전 이름 호환: 데모가 쓰는 --ox 계열 */
+  --ox: var(--acc); --ox-ink: var(--acc-ink); --ox-soft: var(--acc-soft);
+  --ink-panel: var(--code-bg);
+  --keep: 45%;                                /* 입체 윗면: 흰색과 섞는 비율 */
+}
+
+/* ---- 어두운 키노트 톤: D 키로 바꾼다. 같은 이름의 색을 어둡게만 바꾼다 ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --si: #0E0F13; --quartz: #17181D; --paper: #1D1E24; --mist: #2A2B33;
+  --line: #2C2D35; --line-strong: #3D3E48;
+  --lift: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35);
+  --chrome: #F2F2F5; --t1: #F5F5F8; --t2: #D9D9DF; --mute: #9A9AA6; --faint: #6A6A75;
+  --acc: #3B86F6; --acc-ink: #7FB0FF; --acc-soft: #16233A; --acc-line: #2F5A9E; --acc-deep: #A9C8FF;
+  --blue-1: #3B86F6; --blue-2: #2F6BC4; --blue-3: #285598; --blue-4: #1F3F6E; --blue-5: #172A47;
+  --amber: #F0B429; --amber-ink: #F3C766; --amber-soft: #2E2512;
+  --ok: #3CC47A; --ok-soft: #12291D; --bad: #FF6B63; --bad-soft: #331816;
+  --code-bg: #17181D; --term-bg: #0A0A0D;
+  --keep: 82%;
+}
+html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+  transition: background-color .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), fill .35s var(--ease), stroke .35s var(--ease) !important;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--chrome);
+  background: var(--si);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+h1, h2, h3, p, ul, ol, pre { margin: 0; }
+ul, ol { padding: 0; }
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+input, textarea, select { font: inherit; color: inherit; }
+code, pre, kbd { font-family: var(--mono); }
+code { background: var(--mist); padding: .08em .45em; border-radius: 6px; font-size: .88em; color: var(--t1); }
+strong { font-weight: 700; color: var(--t1); }
+a { color: var(--acc-ink); }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+::selection { background: var(--acc-soft); }
+
+/* 큰 숫자 공용: 장 번호, 두께 읽기 */
+.num { font-family: var(--display); font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+
+/* 공용 버튼 */
+.btn {
+  display: inline-flex; align-items: center; gap: .4em;
+  padding: .5em 1.05em;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  color: var(--chrome);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background .08s var(--ease), border-color .08s var(--ease);
+}
+.btn:hover { background: var(--mist); }
+.btn.primary { background: var(--acc); border-color: transparent; color: var(--on-acc); }
+.btn.primary:hover { background: var(--acc-ink); }
+.btn.small { padding: .32em .8em; font-size: .9em; }
+.btn:disabled { opacity: .4; cursor: default; }
+
+/* 작은 상태 표시: 통과·실패·주의 */
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 12.5px; font-weight: 700; line-height: 1.5; white-space: nowrap; background: var(--mist); color: var(--mute); }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.bad { background: var(--bad-soft); color: var(--bad); }
+.badge.warn { background: var(--amber-soft); color: var(--amber-ink); }
+.badge.acc { background: var(--acc-soft); color: var(--acc-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+/* 코드 글꼴의 합자(>= → ≥ 등)는 끈다. 화면 글자가 실제로 칠 글자와 같아야 한다 */
+code, pre, kbd, [class*="mono"], .an-lines, .sh-term, .tui-term, .sq-sql, .ap-pre { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }

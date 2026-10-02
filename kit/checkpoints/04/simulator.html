@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>딜-그로브 산화막 3D 시뮬레이터</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #0b0b0d; color: #f2f2f4; font-family: "Malgun Gothic", "맑은 고딕", "Segoe UI", system-ui, sans-serif; }
+  #app { display: grid; grid-template-columns: 300px 1fr; height: 100%; }
+  aside { padding: 26px 24px; border-right: 1px solid #222; background: #121214; display: flex; flex-direction: column; gap: 18px; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { font-size: 12.5px; color: #9a9aa0; line-height: 1.5; }
+  label { display: block; font-size: 13px; color: #c7c7cc; }
+  label b { color: #fff; font-size: 14px; }
+  input[type=range] { width: 100%; accent-color: #2997ff; margin-top: 6px; }
+  .row { display: flex; gap: 8px; }
+  button { font: inherit; padding: 6px 14px; border-radius: 999px; border: 1px solid #333; background: #1e1e21; color: #fff; cursor: pointer; }
+  button.on { background: #2997ff; border-color: #2997ff; }
+  .readout { margin-top: 6px; }
+  .readout b { font-size: 40px; font-weight: 800; letter-spacing: -.02em; color: #6cb8ff; }
+  .readout span { color: #9a9aa0; font-size: 13px; }
+  .consts { font-family: Consolas, "D2Coding", monospace; font-size: 12px; color: #9a9aa0; line-height: 1.6; }
+  .formula { font-family: Consolas, monospace; font-size: 15px; color: #6cb8ff; }
+  .note { font-size: 12px; color: #6e6e73; margin-top: auto; line-height: 1.5; }
+  #view { position: relative; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <div>
+      <h1>딜-그로브 산화막 시뮬레이터</h1>
+      <div class="sub">실리콘 기판(회색) 위에 산화막(파랑)이 자랍니다. 슬라이더를 움직여 보세요.</div>
+    </div>
+    <label>온도(Temperature) <b id="tv">1000 °C</b><input id="temp" type="range" min="800" max="1200" step="10" value="1000"></label>
+    <label>시간(Time) <b id="hv">1.0 h</b><input id="time" type="range" min="0" max="10" step="0.1" value="1"></label>
+    <div class="row"><button id="dry" class="on">건식 O₂</button><button id="wet">습식 H₂O</button></div>
+    <div class="formula">x² + A·x = B·(t + τ)</div>
+    <div class="consts" id="consts"></div>
+    <div class="readout"><b id="nm">70</b> nm <span id="um">(0.070 μm)</span></div>
+    <div class="note">3D 층 높이는 보기 좋게 과장했습니다 (1 μm = 1.2 단위, 기판 높이 0.6 단위). 숫자는 DealGrove.md 수식 그대로입니다.</div>
+  </aside>
+  <div id="view"></div>
+</div>
+
+<script src="../../lib/three.min.js"></script>
+<script>
+// ---- 딜-그로브 모델 (DealGrove.md 3절 순서 그대로) ----
+const K = 8.617e-5;
+function dealGrove(tempC, hours, wet) {
+  const kT = K * (tempC + 273.15);
+  const B  = wet ? 386   * Math.exp(-0.78 / kT) : 772    * Math.exp(-1.23 / kT);
+  const BA = wet ? 1.63e8 * Math.exp(-2.05 / kT) : 6.23e6 * Math.exp(-2.00 / kT);
+  const A  = B / BA;
+  const xi = wet ? 0 : 0.025;
+  const tau = (xi * xi + A * xi) / B;
+  const x = (A / 2) * (Math.sqrt(1 + 4 * B * (hours + tau) / (A * A)) - 1);
+  return { B, A, tau, x };
+}
+// 검산: 1000 °C, 1 h, 건식 → 약 70 nm
+console.assert(Math.round(dealGrove(1000, 1, false).x * 1000) === 70, '검산값 불일치');
+
+// ---- Three.js 장면 ----
+const view = document.getElementById('view');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+view.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0b0d);
+const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+camera.position.set(3.2, 2.6, 4.2);
+camera.lookAt(0, 0.3, 0);
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x222233, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(4, 6, 3); scene.add(key);
+const furnace = new THREE.PointLight(0xff7a1a, 0, 12); furnace.position.set(0, 3, 0); scene.add(furnace);
+
+// 실리콘 기판: 두꺼운 회색 큐브
+const SUB_H = 0.6;
+const substrate = new THREE.Mesh(new THREE.BoxGeometry(2.4, SUB_H, 2.4),
+  new THREE.MeshStandardMaterial({ color: 0x6b7380, metalness: 0.35, roughness: 0.55 }));
+substrate.position.y = SUB_H / 2;
+scene.add(substrate);
+
+// 산화막: 반투명 파란 층. 높이를 두께에 비례시킨다 (과장 배율)
+const UNITS_PER_UM = 1.2;
+const oxide = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1, 2.4),
+  new THREE.MeshPhysicalMaterial({ color: 0x3a9bff, transparent: true, opacity: 0.55, roughness: 0.15, metalness: 0.0, transmission: 0.2 }));
+scene.add(oxide);
+const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2.4, 1, 2.4)),
+  new THREE.LineBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: 0.6 }));
+scene.add(edges);
+
+// 바닥 격자
+const grid = new THREE.GridHelper(8, 16, 0x2a2a2e, 0x1a1a1e); grid.position.y = -0.001; scene.add(grid);
+
+let targetH = 0.001, currentH = 0.001;
+function setOxideHeight(h) {
+  oxide.scale.y = h; oxide.position.y = SUB_H + h / 2;
+  edges.scale.y = h; edges.position.y = SUB_H + h / 2;
+}
+
+function resize() {
+  const w = view.clientWidth, hgt = view.clientHeight;
+  renderer.setSize(w, hgt); camera.aspect = w / hgt; camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize); resize();
+
+// ---- UI ----
+const $ = id => document.getElementById(id);
+let wet = false;
+function update() {
+  const T = +$('temp').value, t = +$('time').value;
+  $('tv').textContent = T + ' °C'; $('hv').textContent = t.toFixed(1) + ' h';
+  const r = dealGrove(T, t, wet);
+  $('nm').textContent = Math.round(r.x * 1000).toLocaleString();
+  $('um').textContent = `(${r.x.toFixed(3)} μm)`;
+  $('consts').textContent = `B = ${r.B.toFixed(4)} μm²/h   A = ${r.A.toFixed(4)} μm   τ = ${r.tau.toFixed(3)} h`;
+  targetH = Math.max(0.002, Math.min(3.5, r.x * UNITS_PER_UM));
+  furnace.intensity = ((T - 800) / 400) * 6;
+}
+$('temp').addEventListener('input', update);
+$('time').addEventListener('input', update);
+$('dry').addEventListener('click', () => { wet = false; $('dry').classList.add('on'); $('wet').classList.remove('on'); update(); });
+$('wet').addEventListener('click', () => { wet = true; $('wet').classList.add('on'); $('dry').classList.remove('on'); update(); });
+update();
+
+// ---- 애니메이션: 층이 실시간으로 자란다 ----
+let angle = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  currentH += (targetH - currentH) * 0.08;      // 부드럽게 따라간다
+  setOxideHeight(currentH);
+  angle += 0.0025;
+  camera.position.set(Math.sin(angle) * 5.2, 2.8, Math.cos(angle) * 5.2);
+  camera.lookAt(0, 0.4, 0);
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+/* ---- 5장 데이터 개념 데모: SQL 놀이터, API 주문해 보기, 사내 모델 고르기는 explain.css ---- */
+
+/* SQL 놀이터 */
+.sq-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.sq-left { display: grid; gap: 6px; align-content: start; }
+.sq-left .sheet-label { margin: 4px 0 0; }
+.sq-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.sq-chip { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); font-family: var(--mono); font-size: 13px; color: var(--mute); }
+.sq-chip.on { background: var(--acc-soft); border-color: var(--acc-line); color: var(--acc-ink); font-weight: 700; }
+.sq-sql { margin: 6px 0 0; padding: 10px 14px; border-radius: 12px; background: var(--code-bg); font-family: var(--mono); font-size: 13.5px; line-height: 1.7; white-space: normal; }
+.sq-line { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; }
+.sq-line b { color: var(--acc-ink); }
+.sq-line span { color: var(--t1); overflow-wrap: anywhere; }
+.sq-line em { font-style: normal; font-family: var(--font); font-size: 12.5px; color: var(--mute); }
+.sq-right { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.sq-result { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); }
+.sq-tbl { width: 100%; font-size: 13px; }
+.sq-tbl th, .sq-tbl td { padding: 6px 10px; }
+.sq-count { font-size: 12.5px; color: var(--mute); }
+
+/* API 주문해 보기 */
+.ap-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 14px; }
+.ap-items { display: grid; gap: 6px; align-content: start; }
+.ap-item { display: flex; align-items: center; gap: 8px; text-align: left; padding: 9px 12px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); font-size: 14.5px; color: var(--t2); }
+.ap-item.on { border-color: var(--acc); box-shadow: 0 0 0 3px var(--acc-soft); color: var(--t1); font-weight: 700; }
+.ap-m { display: inline-block; min-width: 42px; padding: 1px 6px; border-radius: 6px; font-family: var(--mono); font-size: 11.5px; font-weight: 700; text-align: center; }
+.ap-m.get { background: var(--ok-soft); color: var(--ok); }
+.ap-m.post { background: var(--amber-soft); color: var(--amber-ink); }
+.ap-flow { display: grid; gap: 4px; align-content: start; min-width: 0; }
+.ap-pre { margin: 0; padding: 10px 14px; border-radius: 12px; background: var(--code-bg); font-family: var(--mono); font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--t1); }
+.ap-pre.res { background: var(--term-bg); color: var(--term-fg); }
+.ap-dim { color: var(--mute); }
+.ap-arrow { justify-self: start; margin: 2px 0; padding: 2px 10px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); font-size: 12.5px; font-weight: 700; }
+.ap-arrow::before { content: "↓ "; }
+.ap-say { margin-top: 6px; font-size: 14px; }
+
+@media (max-width: 700px) { .sq-grid, .ap-grid { grid-template-columns: 1fr; } }
