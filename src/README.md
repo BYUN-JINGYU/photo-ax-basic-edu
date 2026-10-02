@@ -8,7 +8,7 @@
 
 - `src/content/00-home.js`  홈 화면 문구
 - `src/site/site.js`        사내 정보 (사외 기준 값 + checked 표시). 사내 LLM 에게 고치게 할 곳
-- `src/content/*.js`        장별 슬라이드 데이터. 장 번호는 파일 순서로 자동 부여(00 시작하기, 01~09 장, 99 부록). 글·순서를 고치려면 여기만
+- `src/content/*.js`        장별 슬라이드 데이터. 장 번호는 파일 순서로 자동 부여(00 시작하기, 01~09 장). 글·순서를 고치려면 여기만
 - `src/demos/*.js`          인터랙티브 데모 (이름 → mount). 새 데모는 `AX.demos['이름'] = { mount }` 로 등록
 - `src/assets/*.png`        슬라이드에 들어가는 그림. 빌드 때 base64 로 HTML 안에 묻힙니다
 - `src/core/`               엔진: util(DOM) · theme(밝기) · art(단면도 SVG) · render(슬라이드) · home(홈) · deck(라우팅·16:9 캔버스·키보드)
@@ -81,7 +81,6 @@
 | `savepoints` | 8장 커밋은 세이브 포인트 | 다음 요청 · 커밋해줘 · 되돌려줘, 커밋을 건너뛰면 무엇을 잃는지 |
 | `pages` | 8장 Pages | Settings → Pages 를 branch · main · Save 순서로 눌러 주소 받기 |
 | `scorer` | 9장 과제 고르기 | 기준 체크 → 점수와 판정 |
-| `site-status` | 부록 사내 정보 점검 | site.js 항목별 확인 여부와 쓰이는 쪽 |
 
 ## 글꼴 (HTML 안에 묻힘, 설치 불필요)
 - 본문·제목: Wanted Sans (OFL). `src/fonts/WantedSansVariable.ttf` 를 빌드 때 교안에 쓰인 글자만 잘라 넣습니다 (약 110 KB).

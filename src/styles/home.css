@@ -13,8 +13,7 @@ body[data-view="chapter"] .home-stage { display: none; }
 .home-kicker { font-size: 15px; font-weight: 700; color: var(--acc-ink); margin-bottom: 14px; }
 .home h1 { font-size: 64px; font-weight: 800; letter-spacing: -.035em; line-height: 1.02; color: var(--t1); }
 .home-sub { font-size: 18.5px; color: var(--mute); margin-top: 16px; line-height: 1.55; }
-.home-credit { margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--acc-ink); }
-.home-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: 14px; color: var(--mute); }
+.home-credit { margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--acc-ink); }
 .home-art { display: grid; gap: 12px; }
 
 .toc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }

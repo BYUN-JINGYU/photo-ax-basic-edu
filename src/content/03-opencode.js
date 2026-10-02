@@ -54,7 +54,7 @@ AX.content.push({
         ],
         done: '다음 쪽으로 가셔도 됩니다.'
       },
-      notes: '모델 응답이 없으면 opencode.json 의 모델 주소와 서버 상태부터. codemate 로그인도 같이 확인합니다. 부록의 트러블슈팅 표 참고.'
+      notes: '모델 응답이 없으면 opencode.json 의 모델 주소와 서버 상태부터. codemate 로그인도 같이 확인합니다.'
     },
     {
       title: '실행법: 폴더로 가서 한 단어',

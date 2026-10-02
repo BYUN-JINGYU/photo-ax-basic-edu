@@ -1,4 +1,4 @@
-// 홈 화면: 제목 + 웨이퍼 히어로 + 장 그리드(3열) + 시작하기/부록 링크. 항목을 누르면 onOpen(sessionId).
+// 홈 화면: 제목 + 웨이퍼 히어로 + 장 그리드(3열) + 시작하기 링크. 항목을 누르면 onOpen(sessionId).
 (function () {
   const { h, chapterNo } = AX.util;
 
@@ -27,7 +27,6 @@
           h('div', { class: 'home-kicker' }, info.kicker || ''),
           h('h1', {}, info.title),
           info.subtitle ? h('p', { class: 'home-sub', html: AX.util.esc(info.subtitle).replace(/\n/g, '<br>') }) : '',
-          h('div', { class: 'home-meta' }, info.meta.map(m => h('span', {}, m))),
           info.credit ? h('div', { class: 'home-credit' }, info.credit) : ''),
         h('div', { class: 'home-art' },
           AX.art.wafer({ n: chapters.length, total: chapters.length, w: 280, h: 230, animate: true }),
